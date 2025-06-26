@@ -6,7 +6,7 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 17:39:45 by mcauchy           #+#    #+#              #
-#    Updated: 2025/06/25 17:00:06 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/26 11:57:30 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,6 @@ $(NAME):	$(OBJS)
 		@printf "$(GREEN)Library $(NAME) created successfully!$(RESET)\n"
 
 %.o:		%.c $(HEADER)
-		@printf "$(CYAN)Compiling $<...$(RESET)\n"
 		@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus:		$(OBJS) $(BONUS_OBJS)

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:39:08 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/25 18:07:51 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:29:40 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static bool	check_philo(t_data *data, size_t i)
 		data->has_eaten++;
 		if (data->has_eaten == data->num_philos)
 		{
+			data->is_dead = true;
 			pthread_mutex_unlock(&data->mutex_m);
 			return (false);
 		}
@@ -64,7 +65,7 @@ static bool	kill_philo(t_philo *philo)
 	return (true);
 }
 
-void	monitoring(t_data *data)
+bool	monitoring(t_data *data)
 {
 	size_t	i;
 
@@ -75,7 +76,10 @@ void	monitoring(t_data *data)
 		while (i < (size_t)data->num_philos)
 		{
 			if (!check_philo(data, i))
-				return ;
+				return (false);
+			if (!kill_philo(&data->philos[i]))
+				return (false);
+			usleep(400);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:46:37 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/25 18:01:23 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:18:01 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	join_threads(t_data *data);
 int		get_time_diff(int start_time);
 int		get_time(void);
 
-void	monitoring(t_data *data);
+bool	monitoring(t_data *data);
+bool	is_dead(t_philo *philo);
+
+void	*philo_routine(void *philosophs);
+
+void	mutex_message(char *msg, t_philo *philo);
 
 #endif

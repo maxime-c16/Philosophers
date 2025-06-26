@@ -6,19 +6,37 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/25 18:02:38 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:45:33 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Philosophers.h"
 
+static void	create_threads(t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < (size_t)data->num_philos)
+	{
+		if (pthread_create(&data->philos[i].thread, NULL,
+				philo_routine, &data->philos[i]) != 0)
+		{
+			ft_putstr_fd("Error: Failed to create philosopher thread.\n", 2);
+			free_resources(data);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+}
+
 static void	init_data(t_data *data, const char **av)
 {
 	ft_bzero(data, sizeof(t_data));
-	data->time_to_die = ft_atoi(av[1]);
-	data->time_to_eat = ft_atoi(av[2]);
-	data->time_to_sleep = ft_atoi(av[3]);
-	data->num_philos = ft_atoi(av[4]);
+	data->num_philos = ft_atoi(av[1]);
+	data->time_to_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
 		data->num_meals = ft_atoi(av[5]);
 	else
@@ -56,7 +74,12 @@ static void	init_philo(t_data *data)
 		data->philos[i].die_soon = 0;
 		data->philos[i].left_fork = &data->forks_m[i];
 		data->philos[i].right_fork = &data->forks_m[(i + 1) % data->num_philos];
-		pthread_mutex_init(&data->forks_m[i], NULL);
+		if (pthread_mutex_init(&data->forks_m[i], NULL) != 0)
+		{
+			ft_putstr_fd("Error: Failed to initialize fork mutex.\n", 2);
+			free_resources(data);
+			exit(EXIT_FAILURE);
+		}
 		i++;
 	}
 	pthread_mutex_init(&data->message_m, NULL);
@@ -94,10 +117,13 @@ static bool	check_args(int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_data	data;
+
 	if (!check_args(ac, av))
 		return (1);
 	init_data(&data, (const char **)av);
 	init_philo(&data);
+	create_threads(&data);
+	monitoring(&data);
 	join_threads(&data);
 	free_resources(&data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:50 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/25 17:36:16 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:09:04 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ void	join_threads(t_data *data)
 		return;
 	while (i < (size_t)data->num_philos)
 	{
-		if (pthread_join(data->philos[i].thread, NULL) != 0)
-		{
-			ft_putstr_fd("Error: Failed to join philosopher thread.\n", 2);
-			free_resources(data);
-			exit(EXIT_FAILURE);
-		}
+		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
 }

@@ -12,21 +12,6 @@
 
 #include "../includes/Philosophers.h"
 
-static void	check_and_destroy_mutex(t_data *data)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < (size_t)data->num_philos)
-	{
-		pthread_mutex_destroy(&data->forks_m[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->dead_m);
-	pthread_mutex_destroy(&data->eat_m);
-	pthread_mutex_destroy(&data->message_m);
-}
-
 void	join_threads(t_data *data)
 {
 	size_t	i;
@@ -45,9 +30,16 @@ void	free_resources(t_data *data)
 {
 	if (!data)
 		return;
-	check_and_destroy_mutex(data);
+	sem_close(data->forks_s);
+	sem_close(data->message_s);
+	sem_close(data->dead_s);
+	sem_close(data->eat_s);
+	sem_close(data->mutex_s);
+	sem_unlink("/philo_forks");
+	sem_unlink("/philo_message");
+	sem_unlink("/philo_dead");
+	sem_unlink("/philo_eat");
+	sem_unlink("/philo_mutex");
 	if (data->philos)
 		free(data->philos);
-	if (data->forks_m)
-		free(data->forks_m);
 }

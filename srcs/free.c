@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:50 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 12:09:04 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:18:07 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	join_threads(t_data *data)
 
 	i = 0;
 	if (!data || !data->philos)
-		return;
+		return ;
 	while (i < (size_t)data->num_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
@@ -29,7 +29,7 @@ void	join_threads(t_data *data)
 void	free_resources(t_data *data)
 {
 	if (!data)
-		return;
+		return ;
 	sem_close(data->forks_s);
 	sem_close(data->message_s);
 	sem_close(data->dead_s);

@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/27 12:16:27 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:17:58 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,15 @@ static void	init_data(t_data *data, const char **av)
 	}
 }
 
-static void	init_philo(t_data *data)
+static void	init_semaphores(t_data *data)
 {
-	size_t	i;
-
-	i = 0;
-	data->start_time = get_time();
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_message");
 	sem_unlink("/philo_dead");
 	sem_unlink("/philo_eat");
 	sem_unlink("/philo_mutex");
-	data->forks_s = sem_open("/philo_forks", O_CREAT, 0644, data->num_philos / 2);
+	data->forks_s = sem_open("/philo_forks", O_CREAT,
+			0644, data->num_philos / 2);
 	data->message_s = sem_open("/philo_message", O_CREAT, 0644, 1);
 	data->dead_s = sem_open("/philo_dead", O_CREAT, 0644, 1);
 	data->eat_s = sem_open("/philo_eat", O_CREAT, 0644, 1);
@@ -55,10 +52,19 @@ static void	init_philo(t_data *data)
 		|| data->dead_s == SEM_FAILED || data->eat_s == SEM_FAILED
 		|| data->mutex_s == SEM_FAILED)
 	{
-		ft_putstr_fd("Error: sem_open() failed\n", 2);
+		ft_putstr_fd("Error: sem_open() failed", 2);
 		free_resources(data);
 		exit(EXIT_FAILURE);
 	}
+}
+
+static void	init_philo(t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	data->start_time = get_time();
+	init_semaphores(data);
 	while (i < (size_t)data->num_philos)
 	{
 		data->philos[i].data = data;
@@ -67,7 +73,7 @@ static void	init_philo(t_data *data)
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].die_soon = 0;
 		if (pthread_create(&data->philos[i].thread, NULL,
-			philo_routine, &data->philos[i]) != 0)
+				philo_routine, &data->philos[i]) != 0)
 		{
 			ft_putstr_fd("Error: Failed to create philosopher thread.\n", 2);
 			free_resources(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:39:08 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 12:29:40 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:19:10 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,18 @@ static bool	check_philo(t_data *data, size_t i)
 
 static bool	philo_die(t_philo *philo)
 {
+	int	i;
+
 	sem_wait(philo->data->dead_s);
-	printf("%dms\t : Philosopher %d %s\n",
+	printf("%dms	 : Philosopher %d %s",
 		get_time_diff(philo->data->start_time), philo->id, DEAD);
 	philo->data->is_dead = true;
+	i = 0;
+	while (i < philo->data->num_philos)
+	{
+		sem_post(philo->data->forks_s);
+		i++;
+	}
 	sem_post(philo->data->dead_s);
 	return (true);
 }

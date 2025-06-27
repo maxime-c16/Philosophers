@@ -31,7 +31,7 @@
 # define THINK "is thinking"
 # define DEAD "died"
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				last_meal;
@@ -41,7 +41,7 @@ typedef struct	s_philo
 	struct s_data	*data;
 }	t_philo;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int				time_to_die;
 	int				time_to_eat;

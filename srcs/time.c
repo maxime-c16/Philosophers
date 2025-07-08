@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:58:09 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/25 18:00:38 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:18:47 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ int	get_time(void)
 int	get_time_diff(int start_time)
 {
 	return (get_time() - start_time);
+}
+
+void	ft_usleep(int time)
+{
+	int	hit;
+
+	hit = get_time() + time;
+	while (get_time() < hit)
+		usleep(10);
 }

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 09:36:27 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:17:49 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	create_threads(t_data *data)
 static void	init_data(t_data *data, const char **av)
 {
 	ft_bzero(data, sizeof(t_data));
-	data->time_to_die = ft_atoi(av[1]);
-	data->time_to_eat = ft_atoi(av[2]);
-	data->time_to_sleep = ft_atoi(av[3]);
-	data->num_philos = ft_atoi(av[4]);
+	data->num_philos = ft_atoi(av[1]);
+	data->time_to_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
 	data->num_meals = -1;
 	if (av[5])
 		data->num_meals = ft_atoi(av[5]);
@@ -96,8 +96,8 @@ static bool	check_args(int ac, char **av)
 	{
 		ft_putstr_fd("Error: Invalid number of arguments.\n", 2);
 		ft_putstr_fd(
-			"Usage: ./philo <time_to_die> <time_to_eat> <time_to_sleep> "
-			"<num_philos> [num_meals]\n", 2);
+			"Usage: ./philo <num_philos> <time_to_die> <time_to_eat> "
+			"<time_to_sleep> [num_meals]\n", 2);
 		return (false);
 	}
 	while (i < (size_t)ac)
@@ -122,7 +122,7 @@ int	main(int ac, char **av)
 	init_data(&data, (const char **)av);
 	init_philo(&data);
 	if (data.num_philos == 1)
-		return (single_philo(&data));	
+		return (single_philo(&data));
 	create_threads(&data);
 	monitoring(&data);
 	join_threads(&data);

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:46:37 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 09:42:45 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:21:07 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define THINK "is thinking"
 # define DEAD "died"
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				last_meal;
@@ -43,7 +43,7 @@ typedef struct	s_philo
 	struct s_data	*data;
 }	t_philo;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int				time_to_die;
 	int				time_to_eat;
@@ -73,6 +73,9 @@ bool	monitoring(t_data *data);
 bool	is_dead(t_philo *philo);
 
 void	*philo_routine(void *philosophs);
+void	take_fork(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
 
 void	mutex_message(char *msg, t_philo *philo);
 

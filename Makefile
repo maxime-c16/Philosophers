@@ -14,13 +14,19 @@ NAME		=	philo
 
 FILES		=	Philosophers.c free.c monitoring.c time.c routine.c utils.c \
 				fork.c
+FILES_BONUS	=	Philosophers_bonus.c free_bonus.c monitoring_bonus.c time_bonus.c \
+				routine_bonus.c utils_bonus.c
 SRC_DIR		=	srcs
+SRC_BONUS	=	srcs_bonus
 SRCS		=	$(addprefix $(SRC_DIR)/, $(FILES))
+SRCS_BONUS	=	$(addprefix $(SRC_BONUS)/, $(FILES_BONUS))
 
 OBJ_DIR		=	.objs
 OBJS		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
+OBJS_BONUS	=	$(addprefix $(OBJ_DIR)/, $(FILES_BONUS:.c=.o))
 
 HEADER		=	includes/Philosophers.h
+HEADER_B	=	includes_bonus/Philosophers_bonus.h
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g3
@@ -51,6 +57,17 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(HEADER) libft/libft.h
 		@printf "$(CYAN)Compiling $<...$(RESET)\n"
 		@$(CC) $(CFLAGS) -c $< -o $@
 
+bonus:	$(OBJS_BONUS)
+		@$(MAKE) -C libft --no-print-directory -s
+		@printf "$(YELLOW)Compiling $(NAME) bonus...$(RESET)\n"
+		@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LDFLAGS) -o $(NAME)
+		@printf "$(GREEN)Bonus compilation successful!$(RESET)\n"
+
+$(OBJ_DIR)/%.o:	$(SRC_BONUS)/%.c $(HEADER_B) libft/libft.h
+		@mkdir -p $(OBJ_DIR)
+		@printf "$(CYAN)Compiling $<...$(RESET)\n"
+		@$(CC) $(CFLAGS) -c $< -o $@
+
 debug:		$(OBJS)
 		@$(MAKE) -C libft --no-print-directory -s
 		@printf "$(YELLOW)Compiling $(NAME) with debug flags...$(RESET)\n"
@@ -71,4 +88,6 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re debug
+rebonus:	fclean bonus
+
+.PHONY:		all clean fclean re debug bonus

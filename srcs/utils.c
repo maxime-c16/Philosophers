@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:14:38 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 15:17:51 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:40:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	mutex_message(char *msg, t_philo *philo)
 		pthread_mutex_unlock(&philo->data->message_m);
 		return ;
 	}
-	printf("%dms\t : Philosopher %d %s\n",
+	printf("%d %d %s\n",
 		time - philo->data->start_time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->message_m);
 }

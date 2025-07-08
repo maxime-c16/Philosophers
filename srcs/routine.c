@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:13:35 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 10:21:01 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:40:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	philo_eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->message_m);
 		return ;
 	}
-	printf("%dms\t : Philosopher %d %s\n", time, philo->id, EAT);
+	printf("%d %d %s\n", time, philo->id, EAT);
 	pthread_mutex_unlock(&philo->data->message_m);
 	pthread_mutex_lock(&philo->data->mutex_m);
 	philo->last_meal = time;
@@ -57,7 +57,6 @@ void	*philo_routine(void *philosophs)
 	t_philo	*philo;
 
 	philo = (t_philo *)philosophs;
-	
 	if (philo->id % 2 == 0)
 	{
 		mutex_message("is thinking", philo);

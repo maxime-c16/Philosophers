@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:39:08 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 10:13:52 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:40:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	single_philo(t_data *data)
 {
-	printf("0ms\t : Philosopher %d %s\n",
+	printf("0 %d %s\n",
 		data->philos[0].id, FORK);
 	ft_usleep(data->time_to_die);
-	printf("%dms\t : Philosopher %d %s\n",
+	printf("%d %d %s\n",
 		data->time_to_die, data->philos[0].id, DEAD);
 	free_resources(data);
 	return (0);
@@ -48,7 +48,7 @@ static bool	philo_die(t_philo *philo)
 		ft_putstr_fd("Error: Failed to lock dead mutex.\n", 2);
 		return (false);
 	}
-	printf("%dms\t : Philosopher %d %s\n",
+	printf("%d %d %s\n",
 		get_time_diff(philo->data->start_time), philo->id, DEAD);
 	philo->data->is_dead = true;
 	if (pthread_mutex_unlock(&philo->data->dead_m) != 0)

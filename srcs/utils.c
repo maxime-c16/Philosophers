@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:14:38 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/27 12:04:20 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:57:09 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	mutex_message(char *msg, t_philo *philo)
 		sem_post(philo->data->message_s);
 		return ;
 	}
-	printf("%dms\t : Philosopher %d %s\n",
+	printf("%d %d %s\n",
 		time - philo->data->start_time, philo->id, msg);
 	sem_post(philo->data->message_s);
 }

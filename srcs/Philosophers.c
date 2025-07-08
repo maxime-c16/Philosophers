@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/27 13:17:58 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:57:28 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	init_semaphores(t_data *data)
 	sem_unlink("/philo_eat");
 	sem_unlink("/philo_mutex");
 	data->forks_s = sem_open("/philo_forks", O_CREAT,
-			0644, data->num_philos / 2);
+			0644, data->num_philos);
 	data->message_s = sem_open("/philo_message", O_CREAT, 0644, 1);
 	data->dead_s = sem_open("/philo_dead", O_CREAT, 0644, 1);
 	data->eat_s = sem_open("/philo_eat", O_CREAT, 0644, 1);
@@ -92,8 +92,8 @@ static bool	check_args(int ac, char **av)
 	{
 		ft_putstr_fd("Error: Invalid number of arguments.\n", 2);
 		ft_putstr_fd(
-			"Usage: ./philo <time_to_die> <time_to_eat> <time_to_sleep> "
-			"<num_philos> [num_meals]\n", 2);
+			"Usage: ./philo <num_philos> <time_to_die> <time_to_eat>"
+			" <time_to_sleep> [num_meals]\n", 2);
 		return (false);
 	}
 	while (i < (size_t)ac)

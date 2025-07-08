@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:39:08 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/27 13:19:10 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:57:09 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	philo_die(t_philo *philo)
 	int	i;
 
 	sem_wait(philo->data->dead_s);
-	printf("%dms	 : Philosopher %d %s",
+	printf("%d %d %s\n",
 		get_time_diff(philo->data->start_time), philo->id, DEAD);
 	philo->data->is_dead = true;
 	i = 0;

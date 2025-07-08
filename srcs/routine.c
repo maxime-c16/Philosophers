@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:13:35 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/27 13:18:17 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:57:45 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static void	philo_eat(t_philo *philo)
 		sem_post(philo->data->message_s);
 		return ;
 	}
-	printf("%dms\t : Philosopher %d %s\n", time, philo->id, EAT);
+	printf("%d %d %s\n", time, philo->id, EAT);
 	sem_post(philo->data->message_s);
 	sem_wait(philo->data->mutex_s);
-	philo->last_meal = get_time() - philo->data->start_time;
+	philo->last_meal = time;
 	philo->meals_eaten++;
 	sem_post(philo->data->mutex_s);
 	ft_usleep(philo->data->time_to_eat);
@@ -73,6 +73,11 @@ void	*philo_routine(void *philosophs)
 	t_philo	*philo;
 
 	philo = (t_philo *)philosophs;
+	if (philo->id % 2 == 0)
+	{
+		mutex_message(THINK, philo);
+		usleep(philo->data->time_to_eat / 2);
+	}
 	while (!is_dead(philo))
 	{
 		take_fork(philo);

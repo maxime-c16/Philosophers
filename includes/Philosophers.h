@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:46:37 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 15:18:01 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:42:45 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ typedef struct	s_data
 
 void	free_resources(t_data *data);
 void	join_threads(t_data *data);
+int		single_philo(t_data *data);
 
 int		get_time_diff(int start_time);
 int		get_time(void);
+void	ft_usleep(int time);
 
 bool	monitoring(t_data *data);
 bool	is_dead(t_philo *philo);

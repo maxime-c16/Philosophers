@@ -6,11 +6,22 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:39:08 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 12:29:40 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:42:34 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Philosophers.h"
+
+int	single_philo(t_data *data)
+{
+	printf("0ms\t : Philosopher %d %s\n",
+		data->philos[0].id, FORK);
+	ft_usleep(data->time_to_die);
+	printf("%dms\t : Philosopher %d %s\n",
+		data->time_to_die, data->philos[0].id, DEAD);
+	free_resources(data);
+	return (0);
+}
 
 static bool	check_philo(t_data *data, size_t i)
 {

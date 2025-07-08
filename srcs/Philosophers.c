@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/26 14:45:33 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:36:27 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ static void	create_threads(t_data *data)
 static void	init_data(t_data *data, const char **av)
 {
 	ft_bzero(data, sizeof(t_data));
-	data->num_philos = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
+	data->time_to_die = ft_atoi(av[1]);
+	data->time_to_eat = ft_atoi(av[2]);
+	data->time_to_sleep = ft_atoi(av[3]);
+	data->num_philos = ft_atoi(av[4]);
+	data->num_meals = -1;
 	if (av[5])
 		data->num_meals = ft_atoi(av[5]);
-	else
-		data->num_meals = -1;
 	data->is_dead = false;
 	data->start_time = 0;
 	data->has_eaten = false;
@@ -122,6 +121,8 @@ int	main(int ac, char **av)
 		return (1);
 	init_data(&data, (const char **)av);
 	init_philo(&data);
+	if (data.num_philos == 1)
+		return (single_philo(&data));	
 	create_threads(&data);
 	monitoring(&data);
 	join_threads(&data);

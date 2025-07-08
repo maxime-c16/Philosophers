@@ -37,7 +37,6 @@ static void	philo_eat(t_philo *philo)
 	}
 	printf("%dms\t : Philosopher %d %s\n", time, philo->id, EAT);
 	pthread_mutex_unlock(&philo->data->message_m);
-	pthread_mutex_lock(&philo->data->mutex_m);
 }
 
 static void	take_fork(t_philo *philo)

@@ -14,8 +14,8 @@ NAME		=	philo
 
 FILES		=	Philosophers.c free.c monitoring.c time.c routine.c utils.c \
 				fork.c
-FILES_BONUS	=	Philosophers_bonus.c free_bonus.c monitoring_bonus.c time_bonus.c \
-				routine_bonus.c utils_bonus.c
+FILES_BONUS	=	Philosophers_bonus.c free_bonus.c monitoring_bonus.c \
+				time_bonus.c routine_bonus.c utils_bonus.c
 SRC_DIR		=	srcs
 SRC_BONUS	=	srcs_bonus
 SRCS		=	$(addprefix $(SRC_DIR)/, $(FILES))

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:58:09 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 10:18:47 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:25:33 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,9 @@ void	ft_usleep(int time)
 
 	hit = get_time() + time;
 	while (get_time() < hit)
+	{
+		if (_data()->is_dead)
+			return ;
 		usleep(10);
+	}
 }

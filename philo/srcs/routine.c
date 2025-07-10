@@ -1,70 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_bonus.c                                    :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:13:35 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 11:06:58 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:25:42 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes_bonus/Philosophers_bonus.h"
+#include "../includes/Philosophers.h"
 
 bool	is_dead(t_philo *philo)
 {
-	sem_wait(philo->data->dead_s);
+	pthread_mutex_lock(&philo->data->dead_m);
 	if (philo->data->is_dead)
 	{
-		sem_post(philo->data->dead_s);
+		pthread_mutex_unlock(&philo->data->dead_m);
 		return (true);
 	}
-	sem_post(philo->data->dead_s);
+	pthread_mutex_unlock(&philo->data->dead_m);
 	return (false);
 }
 
-static void	philo_eat(t_philo *philo)
+void	philo_eat(t_philo *philo)
 {
 	int	time;
 
 	time = get_time_diff(philo->data->start_time);
-	sem_wait(philo->data->message_s);
-	if (is_dead(philo))
+	pthread_mutex_lock(&philo->data->message_m);
+	if (is_dead(philo) || philo->meals_eaten == philo->data->num_meals)
 	{
-		sem_post(philo->data->message_s);
+		pthread_mutex_unlock(&philo->data->message_m);
 		return ;
 	}
 	printf("%d %d %s\n", time, philo->id, EAT);
-	sem_post(philo->data->message_s);
-	sem_wait(philo->data->mutex_s);
+	pthread_mutex_unlock(&philo->data->message_m);
+	pthread_mutex_lock(&philo->data->mutex_m);
 	philo->last_meal = time;
 	philo->meals_eaten++;
-	sem_post(philo->data->mutex_s);
+	pthread_mutex_unlock(&philo->data->mutex_m);
 	ft_usleep(philo->data->time_to_eat);
 }
 
-static void	take_fork(t_philo *philo)
-{
-	sem_wait(philo->data->forks_s);
-	mutex_message(FORK, philo);
-	if (is_dead(philo))
-	{
-		sem_post(philo->data->forks_s);
-		return ;
-	}
-	sem_wait(philo->data->forks_s);
-	mutex_message(FORK, philo);
-	philo_eat(philo);
-	sem_post(philo->data->forks_s);
-	sem_post(philo->data->forks_s);
-}
-
-static void	philo_sleep(t_philo *philo)
+void	philo_sleep(t_philo *philo)
 {
 	if (is_dead(philo))
 		return ;
-	mutex_message(SLEEP, philo);
+	mutex_message("is sleeping", philo);
 	ft_usleep(philo->data->time_to_sleep);
 }
 
@@ -73,11 +57,6 @@ void	*philo_routine(void *philosophs)
 	t_philo	*philo;
 
 	philo = (t_philo *)philosophs;
-	if (philo->id % 2 == 0)
-	{
-		mutex_message(THINK, philo);
-		usleep(philo->data->time_to_eat / 2);
-	}
 	while (!is_dead(philo))
 	{
 		take_fork(philo);
@@ -86,7 +65,7 @@ void	*philo_routine(void *philosophs)
 		philo_sleep(philo);
 		if (is_dead(philo))
 			return (NULL);
-		mutex_message(THINK, philo);
+		mutex_message("is thinking", philo);
 		usleep(200);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:13:35 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/10 16:11:53 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:41:43 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	philo_eat(t_philo *philo)
 
 	time = get_time_diff(philo->data->start_time);
 	sem_wait(philo->data->message_s);
-	if (is_dead(philo))
+	if (is_dead(philo)
+		|| philo->meals_eaten >= philo->data->num_meals)
 	{
 		sem_post(philo->data->message_s);
 		return ;
@@ -73,11 +74,6 @@ void	*philo_routine(void *philosophs)
 	t_philo	*philo;
 
 	philo = (t_philo *)philosophs;
-	if (philo->id % 2 == 0)
-	{
-		mutex_message(THINK, philo);
-		usleep(philo->data->time_to_eat / 2);
-	}
 	while (!is_dead(philo))
 	{
 		take_fork(philo);

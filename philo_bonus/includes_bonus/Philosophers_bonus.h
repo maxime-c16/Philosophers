@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:46:37 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/10 16:27:21 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:43:30 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void	*philo_routine(void *philosophs);
 void	one_philo(t_data *data);
 
 void	mutex_message(char *msg, t_philo *philo);
+t_data	*_data(void);
 
 #endif

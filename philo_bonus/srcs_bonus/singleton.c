@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_bonus.c                                       :+:      :+:    :+:   */
+/*   singleton.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 17:58:09 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/10 16:45:47 by macauchy         ###   ########.fr       */
+/*   Created: 2025/07/10 16:42:19 by macauchy          #+#    #+#             */
+/*   Updated: 2025/07/10 16:43:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/Philosophers_bonus.h"
 
-int	get_time(void)
+t_data	*_data(void)
 {
-	struct timeval	tv;
+	static t_data	data;
+	static bool		init = false;
 
-	if (gettimeofday(&tv, NULL) != 0)
+	if (!init)
 	{
-		ft_putstr_fd("Error: Failed to get current time.\n", 2);
-		exit(EXIT_FAILURE);
+		ft_bzero(&data, sizeof(t_data));
+		init = true;
 	}
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return (&data);
 }
-
-int	get_time_diff(int start_time)
-{
-	return (get_time() - start_time);
-}
-
-void	ft_usleep(int time)
-{
-	int	hit;
-
-	hit = get_time() + time;
-	while (get_time() < hit)
-	{
-		if (_data()->is_dead)
-			return ;
-		usleep(10);
-	}
-}
+	

@@ -13,7 +13,7 @@
 NAME		=	philo
 
 FILES_BONUS	=	Philosophers_bonus.c free_bonus.c monitoring_bonus.c \
-				time_bonus.c routine_bonus.c utils_bonus.c
+				time_bonus.c routine_bonus.c utils_bonus.c singleton.c
 SRC_BONUS	=	srcs_bonus
 SRCS_BONUS	=	$(addprefix $(SRC_BONUS)/, $(FILES_BONUS))
 

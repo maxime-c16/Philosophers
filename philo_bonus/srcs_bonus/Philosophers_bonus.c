@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:25:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/07/08 11:06:58 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:44:18 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,17 @@ static bool	check_args(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 
+	data = _data();
 	if (!check_args(ac, av))
 		return (1);
-	init_data(&data, (const char **)av);
-	init_philo(&data);
-	if (data.num_philos == 1)
-		return (one_philo(&data), 0);
-	monitoring(&data);
-	join_threads(&data);
-	free_resources(&data);
+	init_data(data, (const char **)av);
+	init_philo(data);
+	if (data->num_philos == 1)
+		return (one_philo(data), 0);
+	monitoring(data);
+	join_threads(data);
+	free_resources(data);
 	return (0);
 }
